@@ -9,7 +9,6 @@ describe("parameter functionality", function() {
       "--units=km",
       "--output=json"
     ]);
-    console.log("data", data);
     expect(data).to.be.ok();
     expect(data).to.be.an("object");
 
@@ -29,7 +28,6 @@ describe("parameter functionality", function() {
     const data = parameters.checkRequiredParameters([
       "--address=233 S Wacker Dr, Chicago, IL 60606"
     ]);
-    console.log("data", data);
     expect(data).to.be.ok();
     expect(data).to.be.an("object");
 
