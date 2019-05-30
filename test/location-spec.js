@@ -50,7 +50,7 @@ describe("location functionality", function() {
         expect(data.Latitude).to.eql("41.966857");
         expect(data.Longitude).to.eql("-73.984031");
         expect(data.County).to.eql("Ulster County");
-        expect(data.distance).to.eql("12.37336455102203");
+        expect(data.distance).to.eql("12.36");
         expect(data.distanceUnits).to.eql("mi");
       });
   });
@@ -75,7 +75,7 @@ describe("location functionality", function() {
         expect(data.Latitude).to.eql("41.966857");
         expect(data.Longitude).to.eql("-73.984031");
         expect(data.County).to.eql("Ulster County");
-        expect(data.distance).to.eql("19.913");
+        expect(data.distance).to.eql("19.89");
         expect(data.distanceUnits).to.eql("km");
       });
   });
@@ -91,7 +91,7 @@ describe("location functionality", function() {
         expect(data).to.be.a("string");
         // verify that the address is the same and the distance is in miles
         expect(data).to.eql(
-          "1300 Ulster Ave\nKingston, NY 12401-1501\nDistance: 12.37336455102203 mi"
+          "1300 Ulster Ave\nKingston, NY 12401-1501\nDistance: 12.36 mi"
         );
       });
   });
@@ -107,7 +107,7 @@ describe("location functionality", function() {
         expect(data).to.be.a("string");
         // verify that the address is the same and the distance is in kilometers
         expect(data).to.eql(
-          "1300 Ulster Ave\nKingston, NY 12401-1501\nDistance: 19.913 km"
+          "1300 Ulster Ave\nKingston, NY 12401-1501\nDistance: 19.89 km"
         );
       });
   });

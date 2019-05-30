@@ -3,6 +3,32 @@ const csv = require("csv-parser");
 const fs = require("fs");
 const geolib = require("geolib");
 
+// Source : https://www.geodatasource.com/developers/javascript
+function getDistance(fromLat, fromLng, toLat, toLng, units) {
+  if (fromLat === toLat && fromLng === toLng) {
+    return 0;
+  } else {
+    var radFromLat = (Math.PI * fromLat) / 180;
+    var radToLat = (Math.PI * toLat) / 180;
+    var theta = fromLng - toLng;
+    var radtheta = (Math.PI * theta) / 180;
+    var distance =
+      Math.sin(radFromLat) * Math.sin(radToLat) +
+      Math.cos(radFromLat) * Math.cos(radToLat) * Math.cos(radtheta);
+    if (distance > 1) {
+      distance = 1;
+    }
+    distance = Math.acos(distance);
+    distance = (distance * 180) / Math.PI;
+    distance = distance * 60 * 1.1515;
+    if (units == "km") {
+      distance = distance * 1.609344;
+    }
+    // round distance
+    return Math.round(100 * distance) / 100;
+  }
+}
+
 exports.getCurrentLocation = async function(address) {
   // Using Open Cage Data API
   return await opencage.geocode({
@@ -61,20 +87,14 @@ exports.findClosestStore = async function(location, csvData, units, output) {
       });
 
       // determine the distance from the location to the closest store
-      const meters = geolib.getDistance(
-        {
-          latitude: closestStore.Latitude,
-          longitude: closestStore.Longitude
-        },
-        {
-          latitude: lat,
-          longitude: lng
-        }
-      );
-      // since we get the distance back in meters, we need to convert the data based
-      //   on what was specified as a param or as the default.
       // Add the distance to our json we are passing back.
-      closestStore.distance = geolib.convertDistance(meters, units);
+      closestStore.distance = getDistance(
+        lat,
+        lng,
+        closestStore.Latitude,
+        closestStore.Longitude,
+        units
+      );
       closestStore.distanceUnits = units;
       if (output === "json") {
         // if json is the output, resolve the promise with the json.
